@@ -1,0 +1,20 @@
+# Core ML
+numpy>=1.24
+torch>=2.0
+sentence-transformers>=2.6
+transformers>=4.40
+
+# Database
+psycopg2-binary>=2.9
+pgvector>=0.2
+python-dotenv>=1.0
+
+# Experiments & evaluation
+matplotlib>=3.8
+pandas>=2.0
+scipy>=1.11
+datasets>=2.18       # HuggingFace datasets (EmpatheticDialogues, PersonaChat, MSC)
+
+# Cross-encoder reranking
+# sentence-transformers already pulls this in, listed for clarity
+# cross-encoder/ms-marco-MiniLM-L-6-v2 is loaded at runtime via SentenceTransformers

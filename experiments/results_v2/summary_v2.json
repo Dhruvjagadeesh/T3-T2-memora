@@ -1,0 +1,83 @@
+{
+  "experiment_version": "v2",
+  "n_personas": 20,
+  "seed": 42,
+  "ablation_results": [
+    {
+      "config": "full_model",
+      "tce_mean": 0.25978500000000004,
+      "tce_std": 0.17785999065276034,
+      "tce_median": 0.2162,
+      "separation": 0.9122,
+      "coop_trust_mean": 1.0,
+      "adv_trust_mean": 0.08780000000000002,
+      "pct_within_010": 0.25,
+      "pct_within_020": 0.5
+    },
+    {
+      "config": "no_trust_gate",
+      "tce_mean": 0.516205,
+      "tce_std": 0.25589819162119926,
+      "tce_median": 0.5627500000000001,
+      "separation": 0.0,
+      "coop_trust_mean": 1.0,
+      "adv_trust_mean": 1.0,
+      "pct_within_010": 0.05,
+      "pct_within_020": 0.2
+    },
+    {
+      "config": "no_behavior",
+      "tce_mean": 0.25978500000000004,
+      "tce_std": 0.17785999065276034,
+      "tce_median": 0.2162,
+      "separation": 0.9122,
+      "coop_trust_mean": 1.0,
+      "adv_trust_mean": 0.08780000000000002,
+      "pct_within_010": 0.25,
+      "pct_within_020": 0.5
+    },
+    {
+      "config": "no_emotion",
+      "tce_mean": 0.25978500000000004,
+      "tce_std": 0.17785999065276034,
+      "tce_median": 0.2162,
+      "separation": 0.9122,
+      "coop_trust_mean": 1.0,
+      "adv_trust_mean": 0.08780000000000002,
+      "pct_within_010": 0.25,
+      "pct_within_020": 0.5
+    }
+  ],
+  "full_model": {
+    "tce_by_archetype": {
+      "COOPERATIVE_STABLE": {
+        "mean": 0.1499,
+        "std": 0.0383,
+        "n": 4
+      },
+      "COOPERATIVE_GROWING": {
+        "mean": 0.3225,
+        "std": 0.0503,
+        "n": 4
+      },
+      "ADVERSARIAL": {
+        "mean": 0.0503,
+        "std": 0.0226,
+        "n": 4
+      },
+      "INCONSISTENT": {
+        "mean": 0.5614,
+        "std": 0.0155,
+        "n": 4
+      },
+      "NEW_THEN_DROPS": {
+        "mean": 0.2147,
+        "std": 0.0229,
+        "n": 4
+      }
+    },
+    "pct_within_010": 0.25,
+    "pct_within_020": 0.5
+  },
+  "runtime_seconds": 0.13
+}
