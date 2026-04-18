@@ -85,7 +85,9 @@ class TrustEngine:
         logger.debug("Components  BC=%.3f  ES=%.3f  HR=%.3f", bc, es, hr)
 
         # ── Adversarial detection ────────────────────────────────────────
-        if bc < 0.20 and es < 0.15:
+        # Use raw ES (before EMA), not the smoothed EMA value
+        raw_es = ((valence + 1) / 2) * arousal   # already computed during _compute_es
+        if bc < 0.20 and raw_es < 0.30:          # 0.30 is reachable; 0.15 is not
             state.adversarial_flags += 1
             logger.warning("Adversarial signal for %s (flags=%d)",
                            user_id, state.adversarial_flags)
