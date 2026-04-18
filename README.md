@@ -59,7 +59,10 @@ memora/
 │   └── test_t2.py              # Unit tests for T2 reranking + memory writer
 │
 ├── run_demo.py                 # Quick T3 demo (no DB needed)
-├── run_t2_t3_integration.py    # End-to-end T2+T3 demo
+├── integration/
+│   ├── __init__.py
+│   ├── trust_service.py        # TrustService wrapper → T3Trust dataclass for memory pipeline
+│   └── run_t2_t3_integration.py  # End-to-end T2+T3 demo
 ├── requirements.txt
 ├── .env.example
 └── .gitignore
@@ -78,7 +81,7 @@ pip install -r requirements.txt
 python run_demo.py
 
 # Run the T2+T3 integration demo (trust engine only, no DB)
-python run_t2_t3_integration.py --demo-trust-only
+python integration/run_t2_t3_integration.py --demo-trust-only
 ```
 
 You should see 15 steps of trust evolution, including an IC drop event and an adversarial signal.
