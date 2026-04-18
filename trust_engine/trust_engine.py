@@ -1,4 +1,4 @@
-# trust_engine/trust_engine.py  [MODIFIED — v3 minimal patch]
+# trust_engine/trust_engine.py  [v2 — fixed adversarial detection]
 
 import numpy as np
 from typing import Optional, Tuple, Dict
@@ -85,9 +85,21 @@ class TrustEngine:
         logger.debug("Components  BC=%.3f  ES=%.3f  HR=%.3f", bc, es, hr)
 
         # ── Adversarial detection ────────────────────────────────────────
-        # Use raw ES (before EMA), not the smoothed EMA value
-        raw_es = ((valence + 1) / 2) * arousal   # already computed during _compute_es
-        if bc < 0.20 and raw_es < 0.30:          # 0.30 is reachable; 0.15 is not
+        # Use instantaneous (pre-EMA) signals so a single adversarial turn
+        # is detectable before the slow EMA catches up.
+        raw_es_instant = ((valence + 1) / 2) * arousal
+
+        # Instantaneous cosine BC (pre-EMA, against current centroid)
+        centroid = state.behavior_centroid
+        if centroid is not None and not self.disable_bc:
+            cos_inst = float(np.dot(behavior_vec, centroid) /
+                             (np.linalg.norm(behavior_vec) *
+                              np.linalg.norm(centroid) + 1e-8))
+            bc_inst = (cos_inst + 1) / 2.0
+        else:
+            bc_inst = 0.50
+
+        if bc_inst < 0.20 and raw_es_instant < 0.30:
             state.adversarial_flags += 1
             logger.warning("Adversarial signal for %s (flags=%d)",
                            user_id, state.adversarial_flags)
