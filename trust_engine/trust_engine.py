@@ -102,19 +102,6 @@ class TrustEngine:
         delta             = np.clip(t_raw - t_prev, -self.max_delta, self.max_delta)
         state.trust_score = np.clip(t_prev + delta, 0, 1)
 
-        # ── CONSISTENCY PENALTY (NEW) ────────────────────────────────────
-        if hasattr(state, "bc_ema"):
-            volatility = abs(bc - state.bc_ema)
-            state.trust_score *= (1 - 0.3 * volatility)
-
-        # ── WARMUP BOOST (NEW) ───────────────────────────────────────────
-        if len(state.session_verifications) < 3:
-            state.trust_score += 0.1 * ic_score
-            state.trust_score = np.clip(state.trust_score, 0, 1)
-
-        logger.debug("Trust  prev=%.3f  raw=%.3f  delta=%.3f  new=%.3f",
-                     t_prev, t_raw, delta, state.trust_score)
-
         # ── Hysteretic tier assignment ───────────────────────────────────
         new_tier   = self._score_to_tier(state.trust_score)
         tier_order = {TrustTier.LOW: 0, TrustTier.MEDIUM: 1, TrustTier.HIGH: 2}
